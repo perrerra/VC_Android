@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.mobile.veloconnecte.vcandroid.activities.BikeListActivity">
 
+    <ListView
+        android:id="@+id/bike_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.mobile.veloconnecte.vcandroid;
+package com.mobile.veloconnecte.vcandroid.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
