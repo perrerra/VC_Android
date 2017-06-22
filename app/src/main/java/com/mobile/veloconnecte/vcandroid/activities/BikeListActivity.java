@@ -10,18 +10,31 @@ import android.widget.ListView;
 import com.mobile.veloconnecte.vcandroid.R;
 import com.mobile.veloconnecte.vcandroid.adapters.BikeAdapter;
 import com.mobile.veloconnecte.vcandroid.entities.Bike;
+import com.mobile.veloconnecte.vcandroid.entities.User;
+import com.mobile.veloconnecte.vcandroid.utils.database.BikeManager;
+import com.mobile.veloconnecte.vcandroid.utils.database.RideManager;
+import com.mobile.veloconnecte.vcandroid.utils.database.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BikeListActivity extends AppCompatActivity {
 
+    UserManager userManager;
+    BikeManager bikeManager;
+    RideManager rideManager;
+
+    User currentUser;
+    List<Bike> bikes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_list);
 
-        final BikeAdapter bikeAdapter = new BikeAdapter(this, this.generateBikes());
+        this.bikes = this.getUserBikes();
+
+        final BikeAdapter bikeAdapter = new BikeAdapter(this, this.bikes);
         ListView bikeList = (ListView) findViewById(R.id.bike_list_view);
         bikeList.setAdapter(bikeAdapter);
 
@@ -37,15 +50,14 @@ public class BikeListActivity extends AppCompatActivity {
 
     }
 
-    private List<Bike> generateBikes(){
-        List<Bike> bikes = new ArrayList<>();
-        for (int i=0; i < 5; i++) {
-            Bike bike = new Bike();
-            bike.setName("Bike" + i);
-            bike.setType("Vtt");
-            bikes.add(bike);
-        }
-        return bikes;
+    private List<Bike> getUserBikes(){
+        this.userManager = new UserManager(BikeListActivity.this);
+        this.currentUser = userManager.getUserByUsername("Toto");
 
+        this.bikeManager = new BikeManager(BikeListActivity.this);
+
+        List<Bike> bikes = new ArrayList<>();
+        bikes = bikeManager.getBikesByUserId(this.currentUser.getId());
+        return bikes;
     }
 }

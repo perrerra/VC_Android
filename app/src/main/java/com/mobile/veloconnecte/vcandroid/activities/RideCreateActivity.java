@@ -13,8 +13,10 @@ import com.mobile.veloconnecte.vcandroid.entities.Bike;
 import com.mobile.veloconnecte.vcandroid.entities.Ride;
 import com.mobile.veloconnecte.vcandroid.entities.User;
 import com.mobile.veloconnecte.vcandroid.utils.database.BikeManager;
+import com.mobile.veloconnecte.vcandroid.utils.database.RideManager;
 import com.mobile.veloconnecte.vcandroid.utils.database.UserManager;
 
+import java.util.Date;
 import java.util.List;
 
 public class RideCreateActivity extends AppCompatActivity {
@@ -28,6 +30,7 @@ public class RideCreateActivity extends AppCompatActivity {
 
     UserManager userManager;
     BikeManager bikeManager;
+    RideManager rideManager;
 
     User currentUser;
     List<Bike> bikes;
@@ -53,11 +56,21 @@ public class RideCreateActivity extends AppCompatActivity {
         this.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Bike selectedBike = (Bike) RideCreateActivity.this.bikeSpinner.getSelectedItem();
 
+                rideManager = new RideManager(RideCreateActivity.this);
+
                 Ride ride = new Ride();
-                //ride.setBike(selectedBike);
-                //ride.setStart_date(new Date());
+                ride.setBike(selectedBike);
+                ride.setStart_date(new Date());
+                ride.setEnd_date(new Date());
+                ride.setBike(selectedBike);
+                ride.setUser(selectedBike.getUser());
+
+                long rideId = rideManager.insertRide(ride);
+
+                ride = rideManager.getRideById(rideId);
 
                 //TODO connect to board wifi & insert new ride
 

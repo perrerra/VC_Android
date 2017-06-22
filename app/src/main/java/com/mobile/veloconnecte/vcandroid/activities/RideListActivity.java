@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.mobile.veloconnecte.vcandroid.R;
@@ -42,6 +43,16 @@ public class RideListActivity extends AppCompatActivity {
         final RideAdapter rideAdapter = new RideAdapter(this, this.rides);
         this.rideList = (ListView) findViewById(R.id.ride_list_view);
         this.rideList.setAdapter(rideAdapter);
+
+        this.rideList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Ride ride = rideAdapter.getItem(position);
+
+                Intent intent = new Intent(RideListActivity.this, RideDetailActivity.class);
+                startActivity(intent);
+            }
+        });
 
         this.button = (FloatingActionButton) findViewById(R.id.ride_button_add);
 

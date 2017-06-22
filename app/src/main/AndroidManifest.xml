@@ -15,19 +15,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.BikeListActivity" />
-        <activity android:name=".activities.BikeDetailActivity" />
-        <activity android:name=".activities.RideListActivity">
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.BikeListActivity" />
+        <activity android:name=".activities.BikeDetailActivity" />
+        <activity android:name=".activities.RideListActivity" />
         <activity android:name=".activities.RideDetailActivity" />
         <activity android:name=".activities.RideCreateActivity" />
         <activity android:name=".activities.RideCurrentActivity" />
+        <activity android:name=".activities.RegisterActivity"></activity>
     </application>
 
 </manifest>

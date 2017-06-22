@@ -6,6 +6,15 @@
     <string name="bike_edit_text_wheel_size">Bike wheel size</string>
 
     <string name="ride_create_button">Connect &amp; go !</string>
+    <string name="ride_stop_button">Stop ride</string>
+
+    <string name="login_edit_text_email">Email</string>
+    <string name="login_edit_text_username">Username</string>
+    <string name="login_edit_text_password">Password</string>
+    <string name="login_edit_text_second_password">Password</string>
+    <string name="login_button">Login</string>
+    <string name="register_button">Register</string>
+
 
 
 </resources>

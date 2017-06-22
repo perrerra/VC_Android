@@ -201,4 +201,28 @@ public class BikeManager extends DatabaseManager {
 
         return bikes;
     }
+
+    public int updateBike(Bike bike){
+        db = dbHelper.getReadableDatabase();
+
+        // New value for one column
+        ContentValues values = new ContentValues();
+        values.put(Bike.BikeEntry.COLUMN_NAME_NAME, bike.getName());
+        values.put(Bike.BikeEntry.COLUMN_NAME_TYPE, bike.getType());
+        values.put(Bike.BikeEntry.COLUMN_NAME_WHEEL_SIZE, bike.getWheel_size());
+        values.put(Bike.BikeEntry.COLUMN_NAME_USER_ID, bike.getUser().getId());
+
+        // Which row to update, based on the title
+        String selection = EntityBase.EntityBaseEntry.COLUMN_NAME_ID + " = ?";
+
+        String[] selectionArgs = { String.valueOf(bike.getId()) };
+
+        int count = db.update(
+                Bike.BikeEntry.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+
+        return count;
+    }
 }

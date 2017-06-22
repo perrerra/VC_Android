@@ -79,7 +79,7 @@ public class RideManager extends DatabaseManager {
 
         cursor.moveToNext();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS", Locale.FRANCE);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
 
         String startDateStr = cursor.getString(
                 cursor.getColumnIndexOrThrow(Ride.RideEntry.COLUMN_NAME_START_DATE));
@@ -198,6 +198,32 @@ public class RideManager extends DatabaseManager {
         }
 
         return rides;
+    }
+
+    public int updateRide(Ride ride){
+        db = dbHelper.getReadableDatabase();
+
+        // New value for one column
+        ContentValues values = new ContentValues();
+
+        values.put(Ride.RideEntry.COLUMN_NAME_START_DATE, ride.getStart_date().toString());
+        values.put(Ride.RideEntry.COLUMN_NAME_END_DATE, ride.getEnd_date().toString());
+        values.put(Ride.RideEntry.COLUMN_NAME_DESCRIPTION, ride.getDescription());
+        values.put(Ride.RideEntry.COLUMN_NAME_USER_ID, ride.getUser().getId());
+        values.put(Ride.RideEntry.COLUMN_NAME_BIKE_ID, ride.getBike().getId());
+
+        // Which row to update, based on the title
+        String selection = EntityBase.EntityBaseEntry.COLUMN_NAME_ID + " = ?";
+
+        String[] selectionArgs = { String.valueOf(ride.getId()) };
+
+        int count = db.update(
+                Ride.RideEntry.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+
+        return count;
     }
 
 
