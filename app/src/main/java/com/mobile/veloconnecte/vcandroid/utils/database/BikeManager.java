@@ -21,6 +21,7 @@ public class BikeManager extends DatabaseManager {
 
     public BikeManager(Context context) {
         super(context);
+        this.userManager = new UserManager(context);
     }
 
     public long insertBike(Bike bike){
@@ -129,6 +130,58 @@ public class BikeManager extends DatabaseManager {
 
             long userId = cursor.getInt(
                     cursor.getColumnIndexOrThrow(Bike.BikeEntry.COLUMN_NAME_USER_ID));
+            User user = userManager.getUserById(userId);
+
+            Bike bike = new Bike();
+            bike.setId(cursor.getLong(
+                    cursor.getColumnIndexOrThrow(
+                            EntityBase.EntityBaseEntry.COLUMN_NAME_ID)));
+            bike.setName(cursor.getString(
+                    cursor.getColumnIndexOrThrow(Bike.BikeEntry.COLUMN_NAME_NAME)));
+            bike.setType(cursor.getString(
+                    cursor.getColumnIndexOrThrow(Bike.BikeEntry.COLUMN_NAME_TYPE)));
+            bike.setWheel_size(cursor.getInt(
+                    cursor.getColumnIndexOrThrow(Bike.BikeEntry.COLUMN_NAME_WHEEL_SIZE)));
+            bike.setUser(user);
+
+            bikes.add(bike);
+        }
+
+        return bikes;
+    }
+
+    public List<Bike> getBikes(){
+        db = dbHelper.getReadableDatabase();
+
+        String[] projection = {
+                EntityBase.EntityBaseEntry.COLUMN_NAME_ID,
+                Bike.BikeEntry.COLUMN_NAME_NAME,
+                Bike.BikeEntry.COLUMN_NAME_TYPE,
+                Bike.BikeEntry.COLUMN_NAME_WHEEL_SIZE,
+                Bike.BikeEntry.COLUMN_NAME_USER_ID
+        };
+
+        // How you want the results sorted in the resulting Cursor
+//        String sortOrder =
+//                FeedEntry.COLUMN_NAME_SUBTITLE + " DESC";
+
+        Cursor cursor = db.query(
+                Bike.BikeEntry.TABLE_NAME,          // The table to query
+                projection,                               // The columns to return
+                null,                                // The columns for the WHERE clause
+                null,                            // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                null                                      // The sort order
+        );
+
+        List<Bike> bikes = new ArrayList<>();
+
+        while(cursor.moveToNext()) {
+
+            long userId = cursor.getInt(
+                    cursor.getColumnIndexOrThrow(Bike.BikeEntry.COLUMN_NAME_USER_ID));
+
             User user = userManager.getUserById(userId);
 
             Bike bike = new Bike();

@@ -1,5 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:padding="6dip" >
 
-</TextView>
+    <TextView
+        android:id="@+id/ride_item_text_view_bike"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:ellipsize="marquee"
+        android:maxLines="1"
+        android:text="Ride bike"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/ride_item_text_view_date"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/ride_item_text_view_bike"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:gravity="center_vertical"
+        android:text="Ride date"
+        android:textSize="20sp" />
+
+</RelativeLayout>

@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by guillaumetostain on 17/05/2017.
@@ -24,7 +25,8 @@ public class RideManager extends DatabaseManager {
 
     public RideManager(Context context) {
         super(context);
-
+        this.userManager = new UserManager(context);
+        this.bikeManager = new BikeManager(context);
     }
 
     public long insertRide(Ride ride){
@@ -77,7 +79,7 @@ public class RideManager extends DatabaseManager {
 
         cursor.moveToNext();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS", Locale.FRANCE);
 
         String startDateStr = cursor.getString(
                 cursor.getColumnIndexOrThrow(Ride.RideEntry.COLUMN_NAME_START_DATE));
@@ -155,7 +157,7 @@ public class RideManager extends DatabaseManager {
 
         while(cursor.moveToNext()) {
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
 
             String startDateStr = cursor.getString(
                     cursor.getColumnIndexOrThrow(Ride.RideEntry.COLUMN_NAME_START_DATE));

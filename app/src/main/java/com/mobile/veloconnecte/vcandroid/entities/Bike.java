@@ -68,6 +68,10 @@ public class Bike extends EntityBase {
         this.user = user;
     }
 
+    public String toString() {
+        return this.getName() + " - " + this.getType();
+    }
+
     public static class BikeEntry {
         public static final String TABLE_NAME = "bike";
         public static final String COLUMN_NAME_NAME = "name";

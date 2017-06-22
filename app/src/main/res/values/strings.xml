@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">VCAndroid</string>
+    <string name="edit_button">Update</string>
+    <string name="bike_edit_text_name">Bike name</string>
+    <string name="bike_edit_text_type">Bike type</string>
+    <string name="bike_edit_text_wheel_size">Bike wheel size</string>
+
+    <string name="ride_create_button">Connect &amp; go !</string>
+
+
 </resources>

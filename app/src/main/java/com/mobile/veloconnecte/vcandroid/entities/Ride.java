@@ -78,8 +78,8 @@ public class Ride extends EntityBase {
         public static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE " + RideEntry.TABLE_NAME + " (" +
                         EntityBase.EntityBaseEntry.COLUMN_NAME_ID + " INTEGER PRIMARY KEY," +
-                        RideEntry.COLUMN_NAME_START_DATE + " NUMERIC," +
-                        RideEntry.COLUMN_NAME_END_DATE + " NUMERIC," +
+                        RideEntry.COLUMN_NAME_START_DATE + " TEXT," +
+                        RideEntry.COLUMN_NAME_END_DATE + " TEXT," +
                         RideEntry.COLUMN_NAME_DESCRIPTION + " TEXT," +
                         RideEntry.COLUMN_NAME_USER_ID + " INTEGER," +
                         RideEntry.COLUMN_NAME_BIKE_ID + " INTEGER);";
