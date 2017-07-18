@@ -71,17 +71,17 @@ public class RideListActivity extends AppCompatActivity {
         this.bikeManager = new BikeManager(RideListActivity.this);
         this.rideManager = new RideManager(RideListActivity.this);
 
-        /*User userInsert = new User("Toto", "123", "email@email.com", false);
-        userManager.insertUser(userInsert);*/
+        //User userInsert = new User("Toto", "123", "email@email.com", false);
+        //userManager.insertUser(userInsert);
 
         User user = userManager.getUserByUsername("Toto");
 
-        /*Bike bike = new Bike();
-        bike.setName("Bike2");
-        bike.setType("Vtt");
-        bike.setWheel_size(10);
-        bike.setUser(user);
-        bikeManager.insertBike(bike);*/
+//        Bike bike = new Bike();
+//        bike.setName("Bike2");
+//        bike.setType("Vtt");
+//        bike.setWheel_size(10);
+//        bike.setUser(user);
+//        bikeManager.insertBike(bike);
 
         //List<Bike> bikes = bikeManager.getBikes();
 

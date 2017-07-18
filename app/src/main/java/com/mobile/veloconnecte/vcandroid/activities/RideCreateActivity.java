@@ -1,6 +1,9 @@
 package com.mobile.veloconnecte.vcandroid.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,11 +22,13 @@ import com.mobile.veloconnecte.vcandroid.utils.database.UserManager;
 import java.util.Date;
 import java.util.List;
 
+import static android.provider.Telephony.Carriers.PASSWORD;
+
 public class RideCreateActivity extends AppCompatActivity {
 
-    public static final String SSID = "VC_AP_Mode";
-    public static final String PASSWORD = "veloconnecte";
-
+    public static final String networkSSID  = "SSID";
+    public static final String networkPass  = "password";
+    Context context = this;
     //TextView ssid;
     Spinner bikeSpinner;
     Button button;
@@ -74,17 +79,41 @@ public class RideCreateActivity extends AppCompatActivity {
 
                 //TODO connect to board wifi & insert new ride
 
-                /*WifiConfiguration wifiConfig = new WifiConfiguration();
+
+
+                WifiConfiguration conf = new WifiConfiguration();
+                conf.SSID = "\"" + networkSSID + "\"";
+                conf.preSharedKey = "\""+ networkPass +"\"";
+
+                WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+                wifiManager.addNetwork(conf);
+
+                /*
+
                 wifiConfig.SSID = String.format("\"%s\"", SSID);
                 wifiConfig.preSharedKey = String.format("\"%s\"", PASSWORD);
 
-                WifiManager wifiManager = (WifiManager)getSystemService(WIFI_SERVICE);
+                WifiManager wifiManager = (WifiManager)getContext().getSystemService(WIFI_SERVICE);
                 int netId = wifiManager.addNetwork(wifiConfig);
-
 
                 wifiManager.disconnect();
                 wifiManager.enableNetwork(netId, true);
-                wifiManager.reconnect();*/
+                wifiManager.reconnect();
+
+                */
+
+                List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
+                for( WifiConfiguration i : list ) {
+                    if(i.SSID != null && i.SSID.equals("\"" + networkSSID + "\"")) {
+                        wifiManager.disconnect();
+                        wifiManager.enableNetwork(i.networkId, true);
+                        wifiManager.reconnect();
+
+                        break;
+                    }
+                }
+
+
 
                 Intent intent = new Intent(RideCreateActivity.this, RideCurrentActivity.class);
                 Bundle bundle = new Bundle();
