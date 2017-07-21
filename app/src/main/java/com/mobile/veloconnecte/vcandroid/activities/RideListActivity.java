@@ -50,6 +50,9 @@ public class RideListActivity extends AppCompatActivity {
                 Ride ride = rideAdapter.getItem(position);
 
                 Intent intent = new Intent(RideListActivity.this, RideDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("RIDE", ride);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -63,6 +66,7 @@ public class RideListActivity extends AppCompatActivity {
                 RideListActivity.this.startActivity(intent);
             }
         });
+
     }
 
     private List<Ride> generateRides(){
@@ -95,7 +99,9 @@ public class RideListActivity extends AppCompatActivity {
             //this.rides.add(ride);
         }*/
 
+        rideManager.deleteAllRides();
         List<Ride> rides = new ArrayList<>();
+
         rides = rideManager.getRidesByUserId(user.getId());
 
         return rides;

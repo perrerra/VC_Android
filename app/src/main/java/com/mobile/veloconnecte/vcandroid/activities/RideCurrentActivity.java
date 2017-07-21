@@ -42,10 +42,12 @@ public class RideCurrentActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 currentRide.setEnd_date(new Date());
+                currentRide.setDescription("test description");
                 int count = rideManager.updateRide(currentRide);
 
                 if (count == 1)
                 {
+                    currentRide =  rideManager.getRideById(currentRide.getId());
                     Intent intent = new Intent(RideCurrentActivity.this, RideListActivity.class);
                     RideCurrentActivity.this.startActivity(intent);
                 }

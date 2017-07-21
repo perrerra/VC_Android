@@ -34,7 +34,7 @@ public class RideManager extends DatabaseManager {
         db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Ride.RideEntry.COLUMN_NAME_START_DATE, ride.getStart_date().toString());
-        values.put(Ride.RideEntry.COLUMN_NAME_END_DATE, ride.getEnd_date().toString());
+        //values.put(Ride.RideEntry.COLUMN_NAME_END_DATE, ride.getEnd_date().toString());
         values.put(Ride.RideEntry.COLUMN_NAME_DESCRIPTION, ride.getDescription());
         values.put(Ride.RideEntry.COLUMN_NAME_USER_ID, ride.getUser().getId());
         values.put(Ride.RideEntry.COLUMN_NAME_BIKE_ID, ride.getBike().getId());
@@ -92,7 +92,10 @@ public class RideManager extends DatabaseManager {
 
         try {
             startDate = dateFormat.parse(startDateStr);
-            endDate = dateFormat.parse(endDateStr);
+            if (endDateStr != null)
+            {
+                endDate = dateFormat.parse(endDateStr);
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -110,7 +113,7 @@ public class RideManager extends DatabaseManager {
                 cursor.getColumnIndexOrThrow(
                         EntityBase.EntityBaseEntry.COLUMN_NAME_ID)));
         ride.setStart_date(startDate);
-        ride.setStart_date(endDate);
+        ride.setEnd_date(endDate);
         ride.setDescription(cursor.getString(
                 cursor.getColumnIndexOrThrow(Ride.RideEntry.COLUMN_NAME_DESCRIPTION)));
         ride.setUser(user);
@@ -188,7 +191,7 @@ public class RideManager extends DatabaseManager {
                     cursor.getColumnIndexOrThrow(
                             EntityBase.EntityBaseEntry.COLUMN_NAME_ID)));
             ride.setStart_date(startDate);
-            ride.setStart_date(endDate);
+            ride.setEnd_date(endDate);
             ride.setDescription(cursor.getString(
                     cursor.getColumnIndexOrThrow(Ride.RideEntry.COLUMN_NAME_DESCRIPTION)));
             ride.setUser(user);
@@ -206,11 +209,11 @@ public class RideManager extends DatabaseManager {
         // New value for one column
         ContentValues values = new ContentValues();
 
-        values.put(Ride.RideEntry.COLUMN_NAME_START_DATE, ride.getStart_date().toString());
+        //values.put(Ride.RideEntry.COLUMN_NAME_START_DATE, ride.getStart_date().toString());
         values.put(Ride.RideEntry.COLUMN_NAME_END_DATE, ride.getEnd_date().toString());
-        values.put(Ride.RideEntry.COLUMN_NAME_DESCRIPTION, ride.getDescription());
-        values.put(Ride.RideEntry.COLUMN_NAME_USER_ID, ride.getUser().getId());
-        values.put(Ride.RideEntry.COLUMN_NAME_BIKE_ID, ride.getBike().getId());
+        //values.put(Ride.RideEntry.COLUMN_NAME_DESCRIPTION, ride.getDescription());
+        //values.put(Ride.RideEntry.COLUMN_NAME_USER_ID, ride.getUser().getId());
+        //values.put(Ride.RideEntry.COLUMN_NAME_BIKE_ID, ride.getBike().getId());
 
         // Which row to update, based on the title
         String selection = EntityBase.EntityBaseEntry.COLUMN_NAME_ID + " = ?";
@@ -224,6 +227,12 @@ public class RideManager extends DatabaseManager {
                 selectionArgs);
 
         return count;
+    }
+
+    public void deleteAllRides(){
+        db = dbHelper.getReadableDatabase();
+        // Issue SQL statement.
+        db.delete(Ride.RideEntry.TABLE_NAME, null, null);
     }
 
 
