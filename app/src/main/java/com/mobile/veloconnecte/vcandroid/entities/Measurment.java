@@ -1,8 +1,20 @@
 package com.mobile.veloconnecte.vcandroid.entities;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+
 import com.mobile.veloconnecte.vcandroid.entities.base.EntityBase;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Date;
+
+import static android.content.Context.LOCATION_SERVICE;
 
 /**
  * Created by guillaumetostain on 21/06/2017.
@@ -15,8 +27,8 @@ public class Measurment extends EntityBase {
     private Double speed;
     private int bump;
     private Double air_quality;
-    private Double sloap;
-    private Double rotation;
+    private Double slope;
+    private int rotation;
     private Ride ride;
 
     public Date getMeasurment_date() {
@@ -67,19 +79,19 @@ public class Measurment extends EntityBase {
         this.air_quality = air_quality;
     }
 
-    public Double getSloap() {
-        return sloap;
+    public Double getSlope() {
+        return slope;
     }
 
-    public void setSloap(Double sloap) {
-        this.sloap = sloap;
+    public void setSlope(Double slope) {
+        this.slope = slope;
     }
 
-    public Double getRotation() {
+    public int getRotation() {
         return rotation;
     }
 
-    public void setRotation(Double rotation) {
+    public void setRotation(int rotation) {
         this.rotation = rotation;
     }
 
@@ -94,16 +106,46 @@ public class Measurment extends EntityBase {
     public Measurment() {
     }
 
-    public Measurment(Date measurment_date, Double lat, Double lng, Double speed, int bump, Double air_quality, Double sloap, Double rotation, Ride ride) {
+    public Measurment(Date measurment_date, Double lat, Double lng, Double speed, int bump, Double air_quality, Double slope, int rotation, Ride ride) {
         this.measurment_date = measurment_date;
         this.lat = lat;
         this.lng = lng;
         this.speed = speed;
         this.bump = bump;
         this.air_quality = air_quality;
-        this.sloap = sloap;
+        this.slope = slope;
         this.rotation = rotation;
         this.ride = ride;
+    }
+
+    public static Measurment getMeasurmentFromJson(String jsonString, Ride ride, Context context){
+        Measurment measurment = null;
+        JSONObject jObject;
+        try{
+            jObject = new JSONObject(jsonString);
+            Date date = new Date();
+
+            double longitude = 0;
+            double latitude = 0;
+            Location location;
+            LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+            if ( ContextCompat.checkSelfPermission( context, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                 longitude = location.getLongitude();
+                 latitude = location.getLatitude();
+            }
+
+
+            Double speed = 0.0;
+            int bump = jObject.getInt("bump");
+            Double air_quality = jObject.getDouble("air_quality");
+            Double slope = jObject.getDouble("slope");
+            int rotation = jObject.getInt("rotation");
+            measurment = new Measurment(date, latitude, longitude, speed, bump, air_quality, slope, rotation, ride);
+            }catch(JSONException e){
+
+            }
+        return measurment;
     }
 
     public static class MeasurmentEntry {
@@ -114,7 +156,7 @@ public class Measurment extends EntityBase {
         public static final String COLUMN_NAME_SPEED = "speed";
         public static final String COLUMN_NAME_BUMP = "bump";
         public static final String COLUMN_NAME_AIR_QUALITY = "air_quality";
-        public static final String COLUMN_NAME_SLOAP = "sloap";
+        public static final String COLUMN_NAME_SLOPE = "slope";
         public static final String COLUMN_NAME_ROTATION = "rotation";
         public static final String COLUMN_NAME_RIDE_ID = "ride_id";
 
@@ -127,7 +169,7 @@ public class Measurment extends EntityBase {
                         MeasurmentEntry.COLUMN_NAME_SPEED + " REAL," +
                         MeasurmentEntry.COLUMN_NAME_BUMP + " INTEGER," +
                         MeasurmentEntry.COLUMN_NAME_AIR_QUALITY + " REAL," +
-                        MeasurmentEntry.COLUMN_NAME_SLOAP + " REAL," +
+                        MeasurmentEntry.COLUMN_NAME_SLOPE + " REAL," +
                         MeasurmentEntry.COLUMN_NAME_ROTATION + " REAL," +
                         MeasurmentEntry.COLUMN_NAME_RIDE_ID + " INTEGER);";
 

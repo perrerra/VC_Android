@@ -25,7 +25,7 @@ public class MeasurmentManager extends DatabaseManager {
         values.put(Measurment.MeasurmentEntry.COLUMN_NAME_SPEED, measurment.getSpeed());
         values.put(Measurment.MeasurmentEntry.COLUMN_NAME_BUMP, measurment.getBump());
         values.put(Measurment.MeasurmentEntry.COLUMN_NAME_AIR_QUALITY, measurment.getAir_quality());
-        values.put(Measurment.MeasurmentEntry.COLUMN_NAME_SLOAP, measurment.getSloap());
+        values.put(Measurment.MeasurmentEntry.COLUMN_NAME_SLOPE, measurment.getSlope());
         values.put(Measurment.MeasurmentEntry.COLUMN_NAME_ROTATION, measurment.getRotation());
         values.put(Measurment.MeasurmentEntry.COLUMN_NAME_RIDE_ID, measurment.getRide().getId());
 

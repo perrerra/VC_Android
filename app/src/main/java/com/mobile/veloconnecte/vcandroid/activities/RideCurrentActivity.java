@@ -11,6 +11,7 @@ import com.mobile.veloconnecte.vcandroid.R;
 import com.mobile.veloconnecte.vcandroid.entities.Bike;
 import com.mobile.veloconnecte.vcandroid.entities.Ride;
 import com.mobile.veloconnecte.vcandroid.utils.database.RideManager;
+import com.mobile.veloconnecte.vcandroid.utils.mqtt.PahoListener;
 
 import java.util.Date;
 
@@ -51,5 +52,8 @@ public class RideCurrentActivity extends AppCompatActivity {
                 }
             }
         });
+
+        PahoListener pahoListener = new PahoListener(RideCurrentActivity.this, currentRide);
+        pahoListener.listenTopic();
     }
 }
