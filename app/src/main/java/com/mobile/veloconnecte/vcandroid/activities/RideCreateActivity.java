@@ -36,8 +36,8 @@ import static android.provider.Telephony.Carriers.PASSWORD;
 
 public class RideCreateActivity extends AppCompatActivity {
 
-    public static final String networkSSID  = "SFR_0920";
-    public static final String networkPass  = "krtu3zc23bbfj6wnq33";
+    public static final String networkSSID  = "ssid";
+    public static final String networkPass  = "wifi_password";
     Context context = this;
     //TextView ssid;
     Spinner bikeSpinner;
