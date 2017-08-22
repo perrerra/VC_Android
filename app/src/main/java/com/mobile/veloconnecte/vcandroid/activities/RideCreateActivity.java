@@ -10,7 +10,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
 import com.mobile.veloconnecte.vcandroid.R;
 import com.mobile.veloconnecte.vcandroid.entities.Bike;
 import com.mobile.veloconnecte.vcandroid.entities.Ride;
@@ -18,6 +24,10 @@ import com.mobile.veloconnecte.vcandroid.entities.User;
 import com.mobile.veloconnecte.vcandroid.utils.database.BikeManager;
 import com.mobile.veloconnecte.vcandroid.utils.database.RideManager;
 import com.mobile.veloconnecte.vcandroid.utils.database.UserManager;
+import com.mobile.veloconnecte.vcandroid.utils.volley.MyVolley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Date;
 import java.util.List;
@@ -69,15 +79,20 @@ public class RideCreateActivity extends AppCompatActivity {
                 Ride ride = new Ride();
                 ride.setBike(selectedBike);
                 ride.setStart_date(new Date());
-                ride.setEnd_date(new Date());
                 ride.setBike(selectedBike);
                 ride.setUser(selectedBike.getUser());
+
+                try {
+                    postRide(ride);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
                 long rideId = rideManager.insertRide(ride);
 
                 ride = rideManager.getRideById(rideId);
 
-                //TODO connect to board wifi & insert new ride
+                //TODO connect to board wifi
 
 
 
@@ -123,6 +138,35 @@ public class RideCreateActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void postRide(Ride ride) throws JSONException {
+        String url = "http://10.3.5.37:3000/rides";
+
+        Gson gson = new Gson();
+        String jsonRide = gson.toJson(ride);
+
+        JSONObject jsonObject = new JSONObject(jsonRide);
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        // Access the RequestQueue through your singleton class.
+        MyVolley.getInstance(RideCreateActivity.this).addToRequestQueue(jsObjRequest);
     }
 
 }

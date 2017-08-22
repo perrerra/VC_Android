@@ -44,6 +44,9 @@ public class BikeListActivity extends AppCompatActivity {
                 Bike bike = bikeAdapter.getItem(position);
 
                 Intent intent = new Intent(BikeListActivity.this, BikeDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("BIKE", bike);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
